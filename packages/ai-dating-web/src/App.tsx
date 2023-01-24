@@ -1,8 +1,20 @@
+import { Link } from 'react-router-dom'
+
 function App() {
 	return (
-		<div className='bg-black h-screen text-yellow-500 grid place-items-center'>
-			<p className='text-3xl font-extrabold'>App</p>
-		</div>
+		<>
+			<header>
+				<Link
+					to='/login'
+					className='mx-4'>
+					signIn
+				</Link>
+				<Link to='/signup'>signUp</Link>
+			</header>
+			<div className='bg-black h-[90vh] text-yellow-500 grid place-items-center'>
+				<p className='text-3xl font-extrabold'>App</p>
+			</div>
+		</>
 	)
 }
 
