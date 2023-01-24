@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt, { JsonWebTokenError } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { MessageResponse } from '../interfaces/index.interfaces'
 /**
  *  TODO: req auth header
