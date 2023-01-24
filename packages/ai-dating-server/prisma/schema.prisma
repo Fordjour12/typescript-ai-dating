@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String     @id @default(cuid())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
+  email           String     @unique
+  name            String?
+  avatarImage     String?
+  premium         Premium    @default(HasNotPremium)
+  role            Roles      @default(User)
+  dislikesId      String?
+  password        String
+  isEmailVerified Boolean    @default(false)
+  dislikes        Dislikes[]
+  location        Location[]
+  matches         Matches[]
+}
+
+model Location {
+  id       Int    @id @default(autoincrement())
+  AreaName String
+  Region   String @db.VarChar(100)
+  userId   String
+  User     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Dislikes {
+  id           String @id @default(cuid())
+  dislikesName String
+  userId       String
+  User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Messages {
+  id        String   @id @default(uuid())
+  matchesId String?
+  Matches   Matches? @relation(fields: [matchesId], references: [id])
+}
+
+model Matches {
+  id       String     @id @default(cuid())
+  userId   String
+  User     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Messages[]
+}
+
+enum Premium {
+  HasPremiumActive
+  HasNotPremium
+}
+
+enum Roles {
+  User
+  Creator
+}
